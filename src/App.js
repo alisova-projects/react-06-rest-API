@@ -1,29 +1,24 @@
-import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-import TodosView from './views/TodosView';
-import ArticlesView from './views/ArticlesView';
+import { Component } from 'react';
+import { ToastContainer } from 'react-toastify';
+import PokemonForm from './components/PokemonForm';
+import PokemonInfo from './components/PokemonInfo';
 
-const App = () => (
-  <>
-    <ul>
-      <li>
-        <Link to="/todos">Заметки</Link>
-      </li>
-      <li>
-        <Link to="/articles">Статьи</Link>
-      </li>
-    </ul>
+export default class App extends Component {
+  state = {
+    pokemonName: '',
+  };
 
-    <Switch>
-      <Route path="/todos">
-        <TodosView />
-      </Route>
+  handleFormSubmit = pokemonName => {
+    this.setState({ pokemonName });
+  };
 
-      <Route path="/articles">
-        <ArticlesView />
-      </Route>
-    </Switch>
-  </>
-);
-
-export default App;
+  render() {
+    return (
+      <div style={{ maxWidth: 1170, margin: '0 auto', padding: 20 }}>
+        <PokemonForm onSubmit={this.handleFormSubmit} />
+        <PokemonInfo pokemonName={this.state.pokemonName} />
+        <ToastContainer autoClose={3000} />
+      </div>
+    );
+  }
+}
